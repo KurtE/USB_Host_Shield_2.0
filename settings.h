@@ -39,7 +39,7 @@ e-mail   :  support@circuitsathome.com
 ////////////////////////////////////////////////////////////////////////////////
 
 /* Set this to 1 to activate serial debugging */
-#define ENABLE_UHS_DEBUGGING 0
+#define ENABLE_UHS_DEBUGGING 1
 
 /* This can be used to select which serial port to use for debugging if
  * multiple serial ports are available.
@@ -84,7 +84,8 @@ e-mail   :  support@circuitsathome.com
 ////////////////////////////////////////////////////////////////////////////////
 #ifndef USE_SPI4TEENSY3
 #if defined(CORE_TEENSY) && (defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__))
-#define USE_SPI4TEENSY3 1
+//#define USE_SPI4TEENSY3 1
+#define USE_SPI4TEENSY3 0
 #else
 #define USE_SPI4TEENSY3 0
 #endif

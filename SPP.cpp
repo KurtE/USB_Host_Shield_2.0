@@ -17,8 +17,8 @@
 
 #include "SPP.h"
 // To enable serial debugging see "settings.h"
-//#define EXTRADEBUG // Uncomment to get even more debugging data
-//#define PRINTREPORT // Uncomment to print the report sent to the Arduino
+#define EXTRADEBUG // Uncomment to get even more debugging data
+#define PRINTREPORT // Uncomment to print the report sent to the Arduino
 
 /*
  * CRC (reversed crc) lookup table as calculated by the table generator in ETSI TS 101 369 V6.3.0.

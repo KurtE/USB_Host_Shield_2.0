@@ -17,8 +17,8 @@
 
 #include "PS3USB.h"
 // To enable serial debugging see "settings.h"
-//#define EXTRADEBUG // Uncomment to get even more debugging data
-//#define PRINTREPORT // Uncomment to print the report send by the PS3 Controllers
+#define EXTRADEBUG // Uncomment to get even more debugging data
+#define PRINTREPORT // Uncomment to print the report send by the PS3 Controllers
 
 PS3USB::PS3USB(USB *p, uint8_t btadr5, uint8_t btadr4, uint8_t btadr3, uint8_t btadr2, uint8_t btadr1, uint8_t btadr0) :
 pUsb(p), // pointer to USB class instance - mandatory

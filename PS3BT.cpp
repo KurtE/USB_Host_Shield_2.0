@@ -17,8 +17,8 @@
 
 #include "PS3BT.h"
 // To enable serial debugging see "settings.h"
-//#define EXTRADEBUG // Uncomment to get even more debugging data
-//#define PRINTREPORT // Uncomment to print the report send by the PS3 Controllers
+#define EXTRADEBUG // Uncomment to get even more debugging data
+#define PRINTREPORT // Uncomment to print the report send by the PS3 Controllers
 
 PS3BT::PS3BT(BTD *p, uint8_t btadr5, uint8_t btadr4, uint8_t btadr3, uint8_t btadr2, uint8_t btadr1, uint8_t btadr0) :
 BluetoothService(p) // Pointer to USB class instance - mandatory

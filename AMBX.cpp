@@ -16,7 +16,7 @@
 
 #include "AMBX.h"
 // To enable serial debugging see "settings.h"
-//#define EXTRADEBUG // Uncomment to get even more debugging data
+#define EXTRADEBUG // Uncomment to get even more debugging data
 
 AMBX::AMBX(USB *p) :
 pUsb(p), // pointer to USB class instance - mandatory

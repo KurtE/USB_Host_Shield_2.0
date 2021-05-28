@@ -221,11 +221,17 @@ uint8_t USB::inTransfer(uint8_t addr, uint8_t ep, uint16_t *nbytesptr, uint8_t* 
         return InTransfer(pep, nak_limit, nbytesptr, data, bInterval);
 }
 
+#ifdef DEBUG_USB_HOST
+        uint32_t g_last_debug_in_out_time = 0;
+#endif
 uint8_t USB::InTransfer(EpInfo *pep, uint16_t nak_limit, uint16_t *nbytesptr, uint8_t* data, uint8_t bInterval /*= 0*/) {
         uint8_t rcode = 0;
         uint8_t pktsize;
 
         uint16_t nbytes = *nbytesptr;
+#ifdef DEBUG_USB_HOST
+        uint8_t *data_buffer = data;
+#endif
         //printf("Requesting %i bytes ", nbytes);
         uint8_t maxpktsize = pep->maxPktSize;
 
@@ -293,6 +299,23 @@ uint8_t USB::InTransfer(EpInfo *pep, uint16_t nak_limit, uint16_t *nbytesptr, ui
                 } else if(bInterval > 0)
                         delay(bInterval); // Delay according to polling interval
         } //while( 1 )
+#ifdef DEBUG_USB_HOST
+        if (*nbytesptr) {
+                uint32_t message_time = micros();
+                Notify(PSTR("\n<<("), 0x80);
+                D_PrintHex<uint8_t > (pep->epAddr, 0x80);
+                Notify(PSTR(","), 0x80);
+                D_PrintHex<uint32_t > (message_time - g_last_debug_in_out_time, 0x80);
+                g_last_debug_in_out_time = message_time;
+                Notify(PSTR("):"), 0x80);
+
+                for (uint8_t i = 0; i < *nbytesptr; i++) {
+                        D_PrintHex<uint8_t > (data_buffer[i], 0x80);
+                        Notify(PSTR(" "), 0x80);
+                }
+                Notify("\n", 0x80);
+        }
+#endif
         return ( rcode);
 }
 
@@ -327,6 +350,18 @@ uint8_t USB::OutTransfer(EpInfo *pep, uint16_t nak_limit, uint16_t nbytes, uint8
 
         regWr(rHCTL, (pep->bmSndToggle) ? bmSNDTOG1 : bmSNDTOG0); //set toggle value
 
+#ifdef DEBUG_USB_HOST
+        uint32_t message_time = micros();
+        Notify(PSTR("\n>>("), 0x80);
+        D_PrintHex<uint8_t > (pep->epAddr, 0x80);
+        Notify(PSTR(","), 0x80);
+        D_PrintHex<uint32_t > (message_time - g_last_debug_in_out_time, 0x80);
+        for (uint8_t i = 0; i < nbytes; i++) {
+                D_PrintHex<uint8_t > (data[i], 0x80);
+                Notify(PSTR(" "), 0x80);
+        }
+        Notify("\n", 0x80);
+#endif
         while(bytes_left) {
 #if defined(ESP8266) || defined(ESP32)
                         yield(); // needed in order to reset the watchdog timer on the ESP8266

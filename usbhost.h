@@ -42,12 +42,14 @@ public:
                 // spi4teensy3 inits everything for us, except /SS
                 // CLK, MOSI and MISO are hard coded for now.
                 // spi4teensy3::init(0,0,0); // full speed, cpol 0, cpha 0
+                Serial.println("SPI4Teensy..."); Serial.flush();
                 spi4teensy3::init(); // full speed, cpol 0, cpha 0
                 SPI_SS::SetDirWrite();
                 SPI_SS::Set();
         }
 #elif defined(SPI_HAS_TRANSACTION)
         static void init() {
+                Serial.println("SPI With Transations"); Serial.flush();
                 USB_SPI.begin(); // The SPI library with transaction will take care of setting up the pins - settings is set in beginTransaction()
                 SPI_SS::SetDirWrite();
                 SPI_SS::Set();
